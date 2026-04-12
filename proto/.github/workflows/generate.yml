@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '**/*.proto'
+  workflow_dispatch:
 
 jobs:
   generate:
@@ -55,6 +56,6 @@ jobs:
 
           cd ap2-gen
           git add .
-          git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "chore: regenerate protobuf code from ${{ github.sha }} [skip ci]"
+          git diff --cached --quiet && echo "No changes to push" && exit 0
+          git commit -m "chore: regenerate protobuf code [skip ci]"
           git push https://x-access-token:${GH_TOKEN}@github.com/RendersC/ap2-gen.git main
