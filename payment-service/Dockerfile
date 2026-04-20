@@ -2,8 +2,6 @@ FROM golang:1.22-alpine AS builder
 WORKDIR /app
 
 COPY go.mod go.sum ./
-# Copy generated package so the replace directive resolves
-COPY ../generated /generated
 RUN go mod download
 
 COPY . .
