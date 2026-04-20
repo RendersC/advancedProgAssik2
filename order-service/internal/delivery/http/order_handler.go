@@ -26,6 +26,8 @@ func (h *OrderHandler) RegisterRoutes(r *gin.Engine) {
 		orders.GET("/:id", h.GetOrder)
 		orders.PATCH("/:id/status", h.UpdateOrderStatus)
 	}
+
+	r.GET("/payments/stats", h.GetPaymentStats)
 }
 
 // CreateOrder godoc
@@ -56,6 +58,22 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, order)
+}
+
+// GetPaymentStats godoc
+// GET /payments/stats
+func (h *OrderHandler) GetPaymentStats(c *gin.Context) {
+	stats, err := h.uc.GetPaymentStats(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"total_count":      stats.TotalCount,
+		"authorized_count": stats.AuthorizedCount,
+		"declined_count":   stats.DeclinedCount,
+		"total_amount":     stats.TotalAmount,
+	})
 }
 
 // UpdateOrderStatus godoc

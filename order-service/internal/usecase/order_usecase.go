@@ -19,6 +19,15 @@ type OrderRepository interface {
 // PaymentClient defines the gRPC client contract used by the use case.
 type PaymentClient interface {
 	ProcessPayment(ctx context.Context, orderID, userID, currency string, amount float64) (string, string, error)
+	GetPaymentStats(ctx context.Context) (*PaymentStats, error)
+}
+
+// PaymentStats holds aggregated payment statistics returned from the Payment Service.
+type PaymentStats struct {
+	TotalCount      int64
+	AuthorizedCount int64
+	DeclinedCount   int64
+	TotalAmount     int64
 }
 
 // OrderUseCase holds all business logic for orders.
@@ -81,6 +90,11 @@ func (uc *OrderUseCase) GetOrder(ctx context.Context, id string) (*domain.Order,
 // UpdateOrderStatus allows manual status transitions (e.g. from admin endpoints).
 func (uc *OrderUseCase) UpdateOrderStatus(ctx context.Context, id, status string) error {
 	return uc.repo.UpdateStatus(ctx, id, status)
+}
+
+// GetPaymentStats fetches aggregated payment statistics from the Payment Service via gRPC.
+func (uc *OrderUseCase) GetPaymentStats(ctx context.Context) (*PaymentStats, error) {
+	return uc.paymentClient.GetPaymentStats(ctx)
 }
 
 // SubscribeToOrderUpdates returns a channel of status strings backed by the DB listener.

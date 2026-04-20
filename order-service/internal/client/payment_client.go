@@ -6,6 +6,7 @@ import (
 	"log"
 
 	pb "github.com/RendersC/ap2-gen/payment"
+	"github.com/crewsrenders/order-service/internal/usecase"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
@@ -36,6 +37,20 @@ func NewPaymentGRPCClient(addr string) (*PaymentGRPCClient, error) {
 // Close releases the underlying gRPC connection.
 func (c *PaymentGRPCClient) Close() error {
 	return c.conn.Close()
+}
+
+// GetPaymentStats calls the Payment Service to retrieve aggregated payment statistics.
+func (c *PaymentGRPCClient) GetPaymentStats(ctx context.Context) (*usecase.PaymentStats, error) {
+	resp, err := c.client.GetPaymentStats(ctx, &pb.GetPaymentStatsRequest{})
+	if err != nil {
+		return nil, fmt.Errorf("get payment stats: %w", err)
+	}
+	return &usecase.PaymentStats{
+		TotalCount:      resp.TotalCount,
+		AuthorizedCount: resp.AuthorizedCount,
+		DeclinedCount:   resp.DeclinedCount,
+		TotalAmount:     resp.TotalAmount,
+	}, nil
 }
 
 // ProcessPayment calls the Payment Service and returns (paymentID, status, error).
