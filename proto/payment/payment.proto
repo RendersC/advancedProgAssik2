@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 // PaymentService handles payment processing between Order and Payment services.
 service PaymentService {
   rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+  rpc GetPaymentStats(GetPaymentStatsRequest) returns (PaymentStats);
 }
 
 message PaymentRequest {
@@ -23,4 +24,13 @@ message PaymentResponse {
   string                    status        = 2;  // "SUCCESS" | "FAILED" | "PENDING"
   google.protobuf.Timestamp processed_at  = 3;
   string                    message       = 4;
+}
+
+message GetPaymentStatsRequest {}
+
+message PaymentStats {
+  int64 total_count      = 1;
+  int64 authorized_count = 2;
+  int64 declined_count   = 3;
+  int64 total_amount     = 4; // sum of all amounts in cents
 }

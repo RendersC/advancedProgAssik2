@@ -3,7 +3,7 @@ module github.com/crewsrenders/payment-service
 go 1.22
 
 require (
-	github.com/RendersC/ap2-gen v0.0.0
+	github.com/RendersC/ap2-gen v0.0.0-20260420105738-aee6002119d9
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 	google.golang.org/grpc v1.64.0
@@ -16,5 +16,3 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240318140521-94a12d6c2237 // indirect
 )
-
-replace github.com/RendersC/ap2-gen => ../generated

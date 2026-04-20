@@ -12,6 +12,7 @@ import (
 type PaymentRepository interface {
 	Save(ctx context.Context, p *domain.Payment) error
 	FindByOrderID(ctx context.Context, orderID string) (*domain.Payment, error)
+	GetStats(ctx context.Context) (*domain.PaymentStats, error)
 }
 
 // PaymentUseCase contains all business rules for payment processing.
@@ -21,6 +22,11 @@ type PaymentUseCase struct {
 
 func NewPaymentUseCase(repo PaymentRepository) *PaymentUseCase {
 	return &PaymentUseCase{repo: repo}
+}
+
+// GetPaymentStats returns aggregated payment statistics.
+func (uc *PaymentUseCase) GetPaymentStats(ctx context.Context) (*domain.PaymentStats, error) {
+	return uc.repo.GetStats(ctx)
 }
 
 // ProcessPayment validates and processes a payment request.

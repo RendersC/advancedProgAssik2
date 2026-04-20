@@ -1,3 +1,5 @@
+github.com/RendersC/ap2-gen v0.0.0-20260420105738-aee6002119d9 h1:KsNQnT6n2ZGnheLzNvcJ2m9HCXYzPg0pi84j8kb8YHg=
+github.com/RendersC/ap2-gen v0.0.0-20260420105738-aee6002119d9/go.mod h1:2uZWnJtD4iG2Bq+Z5WnfMDP3ITK+7yR/v40Por2TkmY=
 github.com/bytedance/sonic v1.11.6 h1:oUp34TzMlL+OY1OUWxHqsdkgC/Zfc85zGqw9siXjrc0=
 github.com/bytedance/sonic v1.11.6/go.mod h1:LysEHSvpvDySVdC2f87zGWf6CIKJcAvqab1ZaiQtds4=
 github.com/bytedance/sonic/loader v0.1.1 h1:c+e5Pt1k/cy5wMveRDyk2X4B9hF4g7an8N3zCYjJFNM=

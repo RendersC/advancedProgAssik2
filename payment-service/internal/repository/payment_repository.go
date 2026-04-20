@@ -40,6 +40,23 @@ func (r *PaymentRepository) FindByOrderID(ctx context.Context, orderID string) (
 	return p, err
 }
 
+// GetStats returns aggregated payment statistics via a single SQL query.
+func (r *PaymentRepository) GetStats(ctx context.Context) (*domain.PaymentStats, error) {
+	row := r.db.QueryRowContext(ctx, `
+		SELECT
+			COUNT(*)                                             AS total_count,
+			COUNT(*) FILTER (WHERE status = 'SUCCESS')          AS authorized_count,
+			COUNT(*) FILTER (WHERE status = 'FAILED')           AS declined_count,
+			COALESCE(SUM(ROUND(amount * 100)::BIGINT), 0)       AS total_amount
+		FROM payments`)
+
+	s := &domain.PaymentStats{}
+	if err := row.Scan(&s.TotalCount, &s.AuthorizedCount, &s.DeclinedCount, &s.TotalAmount); err != nil {
+		return nil, fmt.Errorf("get payment stats: %w", err)
+	}
+	return s, nil
+}
+
 // Migrate creates the payments table if it doesn't exist.
 func Migrate(db *sql.DB) error {
 	query := `

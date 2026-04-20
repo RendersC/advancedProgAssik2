@@ -1,3 +1,5 @@
+github.com/RendersC/ap2-gen v0.0.0-20260420105738-aee6002119d9 h1:KsNQnT6n2ZGnheLzNvcJ2m9HCXYzPg0pi84j8kb8YHg=
+github.com/RendersC/ap2-gen v0.0.0-20260420105738-aee6002119d9/go.mod h1:2uZWnJtD4iG2Bq+Z5WnfMDP3ITK+7yR/v40Por2TkmY=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
